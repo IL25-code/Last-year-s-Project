@@ -110,6 +110,11 @@ input[type="submit"]:focus:not(:active) {
     border-width: 1px;
     overflow: scroll;
 }
+
+.chart_div{
+    width: 200px;
+    background-color: #363636;
+}
 .second_part_container{
     display: flex;
 }

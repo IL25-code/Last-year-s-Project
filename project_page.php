@@ -101,8 +101,9 @@ session_start();
 
                     data.addRows([
                         <?php
-                        function add_commas($value){
-                            return "'".$value."'";
+                        function add_commas($value)
+                        {
+                            return "'" . $value . "'";
                         }
                         $conn = $CONNECTION->connect();
                         $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, t.timeframe, DATE_FORMAT(t.start_date, '%Y, %m, %d') start_date, DATE_FORMAT(t.end_date, '%Y, %m, %d') end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='1'");
@@ -113,8 +114,10 @@ session_start();
                     ]);
 
                     var options = {
-                        height: 500,
-                            
+                        backgroundColor: {
+                            fill: 'antiquewhite',
+                        },
+                        width: '10000',
                     };
 
                     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
