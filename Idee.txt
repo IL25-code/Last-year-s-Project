@@ -1,0 +1,64 @@
+Pulsanti per il sito:
+	File:
+		Salva = Salva il progetto appena modificato (sovrascrive il salvataggio precedente e viene cambiato l'attributo di ultima_modifica in progetti)
+		Apri = Crea una copia temporanea del progetto che permette di aprire il progetto senza il problema di modificare il file principale
+		Nuovo = Crea un nuovo file
+		Salva come = Salva il file con un nome preciso
+		Chiudi = Chiude il file e ritorna alla pagina con tutti i progetti realizzati
+	
+	Incarichi:
+		Inserisci = Insert di un incarico
+		Elimina = Elimina un incarico a secondo di un certo id
+		Link = Connette un incarico con id1 con un'altro con id2
+		Unlink = Disconnete due incarichi collegati
+		Trova = Cerca un incarico nella tabella rispetto a un certo id
+		
+	Risorsa:
+		Inserisci = Insert di una risorsa
+		Elimina = Elimina una certa risorsa
+		Trova = Cerca un incarico nella tabella rispetto a un certo id
+		
+DataBase:
+	Progetti:
+		id (PK)
+		nome
+		data_creazione
+		descrizione
+		ultima_modifica
+		budget
+		stato_progetto
+		team_proprietario (FK)
+		
+	Lavoratori:
+		id(PK)
+		nome
+		cognome
+	
+	Team:
+		id (PK)
+		nome
+		capo (FK)
+	
+	Incarichi:
+		id (PK)
+		nome
+		durata
+		data_inizio
+		data_fine
+		predecessori
+		id_progetto (FK)
+		
+	Risorse:
+		id (PK)
+		tipologia
+		id_incarichi (FK)
+		
+	Utente:
+		id (PK)
+		nome
+		cognome
+		
+	Utente-Progetti:
+		id_utente (PK) (FK)
+		id_progetto (PK) (FK)
+		livello_accesso
