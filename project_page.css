@@ -1,0 +1,107 @@
+body{
+    background-color: antiquewhite;
+}
+.button_container{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    justify-content: center  ;
+}
+.files{
+    width: 30%;
+    height: fit-content;
+    min-height: 120px;
+    background-color: yellow;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+}
+.tasks{
+    width: 30%;
+    height: fit-content;
+    min-height: 120px;
+    background-color: red;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+}
+.buttons{
+    text-align: center;
+    
+}
+.resources{
+    width: 30%;
+    height: fit-content;
+    min-height: 120px;
+    background-color: blue;
+    border-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    text-align: center;
+    padding: 10px;
+}
+
+
+input[type="submit"] {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #dbdbdb;
+  border-radius: .375em;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #363636;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 18px;
+  height: 2.5em;
+  justify-content: center;
+  line-height: 1.5;
+  padding: calc(.5em - 1px) 1em;
+  position: relative;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+  margin: 2px
+}
+
+input[type="submit"]:active {
+  border-color: #4a4a4a;
+  outline: 0;
+}
+
+input[type="submit"]:focus {
+  border-color: #485fc7;
+  outline: 0;
+}
+
+input[type="submit"]:hover {
+  border-color: #b5b5b5;
+}
+
+input[type="submit"]:focus:not(:active) {
+  box-shadow: rgba(72, 95, 199, .25) 0 0 0 .125em;
+}
+
+.table_container{
+    width: 50%;
+    background-color: #363636;
+    height: 80vh;
+}
+.calendar_table{
+    width: 50%;
+    background-color: violet;
+    height: 80vh;
+}
+.second_part_container{
+    display: flex;
+}
