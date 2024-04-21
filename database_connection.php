@@ -1,7 +1,6 @@
 <?php
-class connection
-{
-    function conn($hostname, $user, $pass, $data)
+class Connection{
+    function connect($hostname, $user, $pass, $data)
     {
         $conn = new mysqli($hostname, $user, $pass, $data);
         if ($conn->connect_error) {
@@ -58,6 +57,15 @@ class connection
             echo "</tr>";
         }
         echo "</table>";
+    }
+    function table_rows($table){
+        foreach ($table as $row) {
+            echo "<tr>";
+            foreach ($row as $value) {
+                echo "<td>" . $value . "</td>";
+            }
+            echo "</tr>";
+        }
     }
 
     function dml_query($conn, $query)

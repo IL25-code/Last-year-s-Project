@@ -4,8 +4,8 @@
     include 'database_connection.php';
     class Task_Window{
         function add($id, $name, $timeframe, $start_date, $end_date, $link=''){
-            calc_dates($timeframe, $start_date, $end_date);
-            
+            $functions = new Task_Window();
+            $functions->calc_dates($timeframe, $start_date, $end_date);
         }
         
         function calc_dates(&$timeframe, &$start_date, &$end_date){
@@ -19,14 +19,14 @@
             }
             if(!isset($start_date)){
                 if(isset($end_date)){
-                    $start_date=date('d-m-Y',strtotime($end_date."-".$timeframe));
+                    $start_date=date('Y-m-d',strtotime($end_date."-".$timeframe));
                 }
                 else{
-                    $start_date=date('d-m-Y');
+                    $start_date=date('Y-m-d');
                 }
             }
             if(!isset($end_date)){
-                  $end_date=date('d-m-Y',strtotime($start_date."+".$timeframe));
+                  $end_date=date('Y-m-d',strtotime($start_date."+".$timeframe));
             }
         }
 
