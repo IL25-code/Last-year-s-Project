@@ -1,8 +1,10 @@
 <?php
+require "database_data.php";
 class Connection{
-    function connect($hostname, $user, $pass, $data)
+    function connect()
     {
-        $conn = new mysqli($hostname, $user, $pass, $data);
+        $CREDENTIALS = new Credentials();
+        $conn = new mysqli($CREDENTIALS->hostname, $CREDENTIALS->username, $CREDENTIALS->password, $CREDENTIALS->database);
         if ($conn->connect_error) {
             die("Connessione fallita: " . $conn->connect_error);
             return false;
