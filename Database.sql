@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS projects(
 CREATE TABLE IF NOT EXISTS tasks(
 	id int primary key not null auto_increment,
 	name varchar(255) not null,
-	timeframe int not null,
+	timeframe bigint not null,
 	start_date date,
 	end_date date,
 	percentage_complete int,

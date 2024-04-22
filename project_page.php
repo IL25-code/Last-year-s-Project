@@ -117,7 +117,8 @@ session_start();
                         backgroundColor: {
                             fill: 'antiquewhite',
                         },
-                        width: '10000',
+                        width: '5000',
+                        height: '5000',
                     };
 
                     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
