@@ -133,3 +133,9 @@ input[type="submit"]:focus:not(:active) {
     overflow-wrap: break-word;
     padding: 5px;
 }
+
+h2{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
