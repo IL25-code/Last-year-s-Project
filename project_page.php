@@ -118,7 +118,7 @@ session_start();
 
                     var options = {
                         backgroundColor: {
-                            fill: 'antiquewhite',
+                            fill: '#F0FAFB',
                         },
                         width: '5000',
                         height: '5000',

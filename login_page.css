@@ -11,7 +11,7 @@ body{
 
 .main{
     width: 350px;
-    height: 500px;
+    height: 600px;
     background: rgb(173,216,230);
     background: linear-gradient(122deg, rgba(173,216,230,1) 0%, rgba(70,136,247,1) 100%);
     overflow: hidden;

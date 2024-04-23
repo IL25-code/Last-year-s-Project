@@ -6,12 +6,13 @@
         function add($id, $name, $timeframe, $start_date, $end_date, $link=''){
             $functions = new Task_Window();
             $functions->calc_dates($timeframe, $start_date, $end_date);
+            
         }
         
         function calc_dates(&$timeframe, &$start_date, &$end_date){
             if(!isset($timeframe)){
                 if(isset($start_date) && isset($end_date)){
-                    floor((strtotime($start_date) - strtotime($end_date)) / (60 * 60 * 24));
+                    floor((strtotime($start_date) - strtotime($end_date)) * 1000); //Trasforma il risulato in secondi in millisecondi
                 }
                 else{
                     $timeframe=1;
