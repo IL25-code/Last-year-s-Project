@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION["project_id"]=1;
+$_SESSION["project_id"] = 1;
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +68,7 @@ $_SESSION["project_id"]=1;
                 $CONNECTION = new Connection();
                 $conn = $CONNECTION->connect();
                 // $data = $CONNECTION->select_queries($conn,"SELECT t.id, t.name, t.timeframe, t.start_date, t.end_date, t.link FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id=".$_SESSION['project_id'])
-                $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, FLOOR(t.timeframe / 86400000), t.start_date, t.end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, FLOOR(t.timeframe / 86400000), t.start_date, t.end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
                 $CONNECTION->table_rows($data);
                 ?>
             </table>
@@ -107,7 +107,7 @@ $_SESSION["project_id"]=1;
                             return "'" . $value . "'";
                         }
                         $conn = $CONNECTION->connect();
-                        $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, t.timeframe, DATE_FORMAT(t.start_date, '%Y, %m, %d') start_date, DATE_FORMAT(t.end_date, '%Y, %m, %d') end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
+                        $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, t.timeframe, DATE_FORMAT(t.start_date, '%Y, %m, %d') start_date, DATE_FORMAT(t.end_date, '%Y, %m, %d') end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
                         foreach ($data as $value) {
                             echo "['" . $value['id'] . "', '" . $value['name'] . "', new Date(" . $value['start_date'] . "), new Date(" . $value['end_date'] . "), " . $value['timeframe'] . ", " . $value['percentage'] . ", " . (($value['link'] != '') ? add_commas($value['link']) : 'null') . "],";
                         }
@@ -129,46 +129,47 @@ $_SESSION["project_id"]=1;
             </script>
         </div>
     </div>
-    <div class="popups">
+    <dialog taskadd closemodal>
+        <h2>Insert Task</h2>
+        <form action="" method="post">
+            <input type="text" name="task_id" class="text_input" placeholder="Task ID (Optional)"><br>
+            <input type="text" name="task_name" id="Tex" class="text_input" placeholder="Name" required=""><br>
+            <input type="text" name="task_timeframe" id="Tex" class="text_input" placeholder="Timeframe"><br>
+            <input type="text" name="task_start-date" class="text_input" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+            <input type="text" name="task_end-date" class="text_input" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+            <input type="text" name="Link" id="Tex" class="text_input" placeholder="Link"><br>
+            <input type="text" name="Percentage" id="Tex" class="text_input" placeholder="Percentage"><br>
+            <input type="submit" name="insert_item" value="Insert">
+        </form>
         <button class="close_button">&times;</button>
-        <div class="popup_window" taskadd>
-            <h2>Insert Task</h2>
-            <form action="" method="post">
-                <input type="text" name="task_id" class="text_input" placeholder="Task ID (Optional)"><br>
-                <input type="text" name="task_name" id="Tex" class="text_input" placeholder="Name" required=""><br>
-                <input type="text" name="task_timeframe" id="Tex" class="text_input" placeholder="Timeframe"><br>
-                <input type="text" name="task_start-date" class="text_input" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
-                <input type="text" name="task_end-date" class="text_input" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
-                <input type="text" name="Link" id="Tex" class="text_input" placeholder="Link"><br>
-                <input type="text" name="Percentage" id="Tex" class="text_input" placeholder="Percentage"><br>
-                <input type="submit" name="insert_item" value="Insert">
-            </form>
-        </div>
-        <div class="popup_window" linktasks>
-            <h2>Link Tasks</h2>
-            <form action="" method="post">
-                <select name="task1" id="task1" class="select">
-                    <option value="" disabled selected>Choose task 1</option>
-                    <?php
-                        $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
-                        foreach($data as $value){
-                            echo "<option value='".$value["id"]."'>Task ID: ".$value["id"]."</option>";
-                        }
-                    ?>
-                </select><br>
-                <select name="task2" id="task2" class="select">
-                    <option value="" disabled selected>Choose task 2</option>
-                    <?php
-                        $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
-                        foreach($data as $value){
-                            echo "<option value='".$value["id"]."'>Task ID: ".$value["id"]."</option>";
-                        }
-                    ?>
-                </select>
-                <input type="submit" name="insert_item" value="Link">
-            </form>
-        </div>
-    </div>
+    </dialog>
+    
+    <dialog tasklink closemodal>
+        <h2>Link Tasks</h2>
+        <form action="" method="post">
+            <select name="task1" id="task1" class="select">
+                <option value="" disabled selected>Choose task 1</option>
+                <?php
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                foreach ($data as $value) {
+                    echo "<option value='" . $value["id"] . "'>Task ID: " . $value["id"] . "</option>";
+                }
+                ?>
+            </select><br>
+            <select name="task2" id="task2" class="select">
+                <option value="" disabled selected>Choose task 2</option>
+                <?php
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                foreach ($data as $value) {
+                    echo "<option value='" . $value["id"] . "'>Task ID: " . $value["id"] . "</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" name="insert_item" value="Link">
+        </form>
+        
+        <button class="close_button">&times;</button>
+    </dialog>
     <script src="popups.js"></script>
 </body>
 

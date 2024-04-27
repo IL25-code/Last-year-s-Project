@@ -1,15 +1,25 @@
-document.querySelector("#t_add").addEventListener("click", function() {
-    document.querySelector(".popups").classList.add("active");
-    document.querySelector("[taskadd]").classList.add("active");
+document.querySelector("#t_add").addEventListener("click", function () {
+    document.querySelector("[taskadd]").showModal();
+});
+document.querySelector("#t_link").addEventListener("click", function () {
+    document.querySelector("[tasklink]").showModal();
 });
 
-document.querySelector("#t_link").addEventListener("click", function() {
-    document.querySelector(".popups").classList.add("active");
-    document.querySelector("[linktasks]").classList.add("active");
-});
+var closeButtons = Array.from(document.querySelectorAll(".close_button"));
 
-document.querySelector(".popups .close_button").addEventListener("click", function() {
-    document.querySelector(".popups").classList.remove("active");
-    document.querySelector("[taskadd]").classList.remove("active");
-    document.querySelector("[linktasks]").classList.remove("active");
-});
+
+
+for (var x of closeButtons) {
+    var dialog = x.closest('dialog');
+    if (dialog) {
+        var attributes = Array.from(dialog.attributes);
+        var idname = attributes[0].name;
+        x.addEventListener("click", closeModal(idname));
+    } else {
+        console.log("Nessun nodo dialog trovato contenente .close_button.");
+    }
+}
+
+function closeModal(id){
+    document.getElementById("["+id+"]").close();
+}
