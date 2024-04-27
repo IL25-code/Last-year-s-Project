@@ -18,6 +18,7 @@
                 <input type="text" name="txt" placeholder="Username" required="">
                 <input type="text" name="email" placeholder="E-mail" required="">
                 <input type="text" name="password" placeholder="Password" required="">
+                <input type="text" name="employee_code" placeholder="Employee Code" required="">
                 <button>Sign Up</button>
             </form>
         </div>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION["project_id"]=1;
 ?>
 
 <!DOCTYPE html>
@@ -20,38 +21,35 @@ session_start();
         <div class="files">
             <h2>Project</h2>
             <div class="buttons">
-                <form action="" method="post">
-                    <input type="submit" value="Create" name="f_create">
-                    <input type="submit" value="Open" name="f_open">
-                    <input type="submit" value="Save as" name="f_save_as">
-                    <input type="submit" value="Close" name="f_close">
-                </form>
+                <button id="login">Login</button>
+                <button type="submit" name="f_create" id="f_create">Create</button>
+                <button type="submit" name="f_open" id="f_open">Open</button>
+                <button type="submit" name="f_save_as" id="f_save_as">Save as</button>
+                <button type="submit" name="f_close" id="f_close">Close</button>
             </div>
         </div>
         <div class="tasks">
             <h2>Tasks</h2>
             <div class="buttons">
-                <form action="" method="post">
-                    <input type="submit" value="Add" name="t_add">
-                    <input type="submit" value="Remove" name="t_remove">
-                    <input type="submit" value="Link" name="t_link">
-                    <input type="submit" value="Unlink" name="t_unlink">
-                    <input type="submit" value="Find" name="t_find">
-                </form>
+                <button type="submit" name="t_add" id="t_add">Add</button>
+                <button type="submit" name="t_remove" id="t_remove">Remove</button>
+                <button type="submit" name="t_link" id="t_link">Link</button>
+                <button type="submit" name="t_unlink" id="t_unlink">Unlink</button>
+                <button type="submit" name="t_find" id="t_find">Find</button>
             </div>
         </div>
         <div class="resources">
             <h2>Resources</h2>
             <div class="buttons">
-                <form action="" method="post">
-                    <input type="submit" value="Add" name="r_add">
-                    <input type="submit" value="Delete" name="r_delete">
-                    <input type="submit" value="Link" name="r_link">
-                    <input type="submit" value="Unlink" name="r_unlink">
-                    <input type="submit" value="Find" name="r_find">
-                </form>
+                <button type="submit" name="r_add" id="r_add">Add</button>
+                <button type="submit" name="r_delete" id="r_delete">Delete</button>
+                <button type="submit" name="r_link" id="r_link">Link</button>
+                <button type="submit" name="r_unlink" id="r_unlink">Unlink</button>
+                <button type="submit" name="r_find" id="r_find">Find</button>
             </div>
         </div>
+
+
     </div>
     <div class="second_part_container">
         <div class="table_container">
@@ -70,7 +68,7 @@ session_start();
                 $CONNECTION = new Connection();
                 $conn = $CONNECTION->connect();
                 // $data = $CONNECTION->select_queries($conn,"SELECT t.id, t.name, t.timeframe, t.start_date, t.end_date, t.link FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id=".$_SESSION['project_id'])
-                $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, FLOOR(t.timeframe / 86400000), t.start_date, t.end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='1'");
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, FLOOR(t.timeframe / 86400000), t.start_date, t.end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
                 $CONNECTION->table_rows($data);
                 ?>
             </table>
@@ -109,7 +107,7 @@ session_start();
                             return "'" . $value . "'";
                         }
                         $conn = $CONNECTION->connect();
-                        $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, t.timeframe, DATE_FORMAT(t.start_date, '%Y, %m, %d') start_date, DATE_FORMAT(t.end_date, '%Y, %m, %d') end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='1'");
+                        $data = $CONNECTION->select_queries($conn, "SELECT t.id, t.name, t.timeframe, DATE_FORMAT(t.start_date, '%Y, %m, %d') start_date, DATE_FORMAT(t.end_date, '%Y, %m, %d') end_date, t.link, t.percentage FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
                         foreach ($data as $value) {
                             echo "['" . $value['id'] . "', '" . $value['name'] . "', new Date(" . $value['start_date'] . "), new Date(" . $value['end_date'] . "), " . $value['timeframe'] . ", " . $value['percentage'] . ", " . (($value['link'] != '') ? add_commas($value['link']) : 'null') . "],";
                         }
@@ -129,10 +127,49 @@ session_start();
                     chart.draw(data, options);
                 }
             </script>
-
         </div>
     </div>
-
+    <div class="popups">
+        <button class="close_button">&times;</button>
+        <div class="popup_window" taskadd>
+            <h2>Insert Task</h2>
+            <form action="" method="post">
+                <input type="text" name="task_id" class="text_input" placeholder="Task ID (Optional)"><br>
+                <input type="text" name="task_name" id="Tex" class="text_input" placeholder="Name" required=""><br>
+                <input type="text" name="task_timeframe" id="Tex" class="text_input" placeholder="Timeframe"><br>
+                <input type="text" name="task_start-date" class="text_input" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+                <input type="text" name="task_end-date" class="text_input" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
+                <input type="text" name="Link" id="Tex" class="text_input" placeholder="Link"><br>
+                <input type="text" name="Percentage" id="Tex" class="text_input" placeholder="Percentage"><br>
+                <input type="submit" name="insert_item" value="Insert">
+            </form>
+        </div>
+        <div class="popup_window" linktasks>
+            <h2>Link Tasks</h2>
+            <form action="" method="post">
+                <select name="task1" id="task1" class="select">
+                    <option value="" disabled selected>Choose task 1</option>
+                    <?php
+                        $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
+                        foreach($data as $value){
+                            echo "<option value='".$value["id"]."'>Task ID: ".$value["id"]."</option>";
+                        }
+                    ?>
+                </select><br>
+                <select name="task2" id="task2" class="select">
+                    <option value="" disabled selected>Choose task 2</option>
+                    <?php
+                        $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='".$_SESSION["project_id"]."'");
+                        foreach($data as $value){
+                            echo "<option value='".$value["id"]."'>Task ID: ".$value["id"]."</option>";
+                        }
+                    ?>
+                </select>
+                <input type="submit" name="insert_item" value="Link">
+            </form>
+        </div>
+    </div>
+    <script src="popups.js"></script>
 </body>
 
 </html>
