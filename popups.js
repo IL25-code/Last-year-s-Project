@@ -1,25 +1,24 @@
-document.querySelector("#t_add").addEventListener("click", function () {
-    document.querySelector("[taskadd]").showModal();
+var dialogID = null;
+
+document.querySelector("#t_add").addEventListener("click", ()=>{
+    document.getElementById("taskadd").showModal();
+    dialogID = "taskadd";
 });
-document.querySelector("#t_link").addEventListener("click", function () {
-    document.querySelector("[tasklink]").showModal();
+document.querySelector("#t_link").addEventListener("click", ()=>{
+    document.getElementById("tasklink").showModal();
+    dialogID = "tasklink";
+});
+document.querySelector("#t_remove").addEventListener("click", ()=>{
+    document.getElementById("taskremove").showModal();
+    dialogID = "taskremove";
+});
+document.querySelector("#t_unlink").addEventListener("click", ()=>{
+    document.getElementById("taskunlink").showModal();
+    dialogID = "taskunlink";
 });
 
-var closeButtons = Array.from(document.querySelectorAll(".close_button"));
-
-
-
-for (var x of closeButtons) {
-    var dialog = x.closest('dialog');
-    if (dialog) {
-        var attributes = Array.from(dialog.attributes);
-        var idname = attributes[0].name;
-        x.addEventListener("click", closeModal(idname));
-    } else {
-        console.log("Nessun nodo dialog trovato contenente .close_button.");
-    }
-}
-
-function closeModal(id){
-    document.getElementById("["+id+"]").close();
+for(var x of document.querySelectorAll(".close_button")){
+    x.addEventListener("click", ()=>{
+        document.getElementById(dialogID).close();
+    })
 }

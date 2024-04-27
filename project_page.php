@@ -21,7 +21,6 @@ $_SESSION["project_id"] = 1;
         <div class="files">
             <h2>Project</h2>
             <div class="buttons">
-                <button id="login">Login</button>
                 <button type="submit" name="f_create" id="f_create">Create</button>
                 <button type="submit" name="f_open" id="f_open">Open</button>
                 <button type="submit" name="f_save_as" id="f_save_as">Save as</button>
@@ -35,7 +34,6 @@ $_SESSION["project_id"] = 1;
                 <button type="submit" name="t_remove" id="t_remove">Remove</button>
                 <button type="submit" name="t_link" id="t_link">Link</button>
                 <button type="submit" name="t_unlink" id="t_unlink">Unlink</button>
-                <button type="submit" name="t_find" id="t_find">Find</button>
             </div>
         </div>
         <div class="resources">
@@ -45,7 +43,6 @@ $_SESSION["project_id"] = 1;
                 <button type="submit" name="r_delete" id="r_delete">Delete</button>
                 <button type="submit" name="r_link" id="r_link">Link</button>
                 <button type="submit" name="r_unlink" id="r_unlink">Unlink</button>
-                <button type="submit" name="r_find" id="r_find">Find</button>
             </div>
         </div>
 
@@ -129,7 +126,7 @@ $_SESSION["project_id"] = 1;
             </script>
         </div>
     </div>
-    <dialog taskadd closemodal>
+    <dialog id="taskadd" closemodal>
         <h2>Insert Task</h2>
         <form action="" method="post">
             <input type="text" name="task_id" class="text_input" placeholder="Task ID (Optional)"><br>
@@ -144,32 +141,50 @@ $_SESSION["project_id"] = 1;
         <button class="close_button">&times;</button>
     </dialog>
     
-    <dialog tasklink closemodal>
-        <h2>Link Tasks</h2>
+    <dialog id="taskremove" closemodal>
+        <h2>Remove Task</h2>
         <form action="" method="post">
             <select name="task1" id="task1" class="select">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
-                $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
                 foreach ($data as $value) {
-                    echo "<option value='" . $value["id"] . "'>Task ID: " . $value["id"] . "</option>";
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:".$value["id"].")</option>";
+                }
+                ?>
+            </select><br>
+            <input type="submit" name="insert_item" value="Remove">
+        </form>
+        <button class="close_button">&times;</button>
+    </dialog>
+
+    <dialog id="taskunlink" closemodal>
+        <h2>Unlink Tasks</h2>
+        <form action="" method="post">
+            <select name="task1" id="task1" class="select">
+                <option value="" disabled selected>Choose task 1</option>
+                <?php
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                foreach ($data as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:".$value["id"].")</option>";
                 }
                 ?>
             </select><br>
             <select name="task2" id="task2" class="select">
                 <option value="" disabled selected>Choose task 2</option>
                 <?php
-                $data = $CONNECTION->select_queries($conn, "SELECT t.id FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
                 foreach ($data as $value) {
-                    echo "<option value='" . $value["id"] . "'>Task ID: " . $value["id"] . "</option>";
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:".$value["id"].")</option>";
                 }
                 ?>
             </select>
-            <input type="submit" name="insert_item" value="Link">
+            <input type="submit" name="insert_item" value="Unlink">
         </form>
         
         <button class="close_button">&times;</button>
     </dialog>
+    
     <script src="popups.js"></script>
 </body>
 
