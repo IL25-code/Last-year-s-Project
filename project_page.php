@@ -10,9 +10,6 @@ $_SESSION["project_id"] = 1;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="project_page.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <title>Project Page</title>
 </head>
 
@@ -144,7 +141,7 @@ $_SESSION["project_id"] = 1;
     <dialog id="taskremove" closemodal>
         <h2>Remove Task</h2>
         <form action="" method="post">
-            <select name="task1" id="task1" class="select">
+            <select name="task1" id="task1" class="select" required="">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
                 $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
@@ -157,11 +154,10 @@ $_SESSION["project_id"] = 1;
         </form>
         <button class="close_button">&times;</button>
     </dialog>
-
-    <dialog id="taskunlink" closemodal>
-        <h2>Unlink Tasks</h2>
+    <dialog id="tasklink" closemodal>
+        <h2>Link Tasks</h2>
         <form action="" method="post">
-            <select name="task1" id="task1" class="select">
+            <select name="task1" id="task1" class="select" required="">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
                 $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
@@ -170,7 +166,33 @@ $_SESSION["project_id"] = 1;
                 }
                 ?>
             </select><br>
-            <select name="task2" id="task2" class="select">
+            <select name="task2" id="task2" class="select" required="">
+                <option value="" disabled selected>Choose task 2</option>
+                <?php
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                foreach ($data as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:".$value["id"].")</option>";
+                }
+                ?>
+            </select>
+            <input type="submit" name="insert_item" value="Link">
+        </form>
+        
+        <button class="close_button">&times;</button>
+    </dialog>
+    <dialog id="taskunlink" closemodal>
+        <h2>Unlink Tasks</h2>
+        <form action="" method="post">
+            <select name="task1" id="task1" class="select" required="">
+                <option value="" disabled selected>Choose task 1</option>
+                <?php
+                $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
+                foreach ($data as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:".$value["id"].")</option>";
+                }
+                ?>
+            </select><br>
+            <select name="task2" id="task2" class="select" required="">
                 <option value="" disabled selected>Choose task 2</option>
                 <?php
                 $data = $CONNECTION->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");
