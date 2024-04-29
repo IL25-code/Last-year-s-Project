@@ -76,7 +76,7 @@ class Connection{
         if (!$ris) {
             return false;
         }
-        return $ris;
+        return true;
     }
 
     function disconnect($conn)

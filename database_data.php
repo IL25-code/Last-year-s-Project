@@ -1,6 +1,5 @@
 <?php
-class Credentials
-{
+class Credentials{
     public $hostname = 'localhost';
     public $username = 'root';
     public $password = '';

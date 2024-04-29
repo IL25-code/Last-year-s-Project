@@ -1,12 +1,12 @@
 <!-- incarichi: in questa categoria saranno presenti i tasti per manipolazione dei vari incarichi, i tasti saranno: Inserisci, Elimina, Collega, Scollega, Trova; -->
 
 <?php
-    include 'database_connection.php';
+    session_start();
+    require "database_connection.php";
     class Task_Window{
-        function add($id, $name, $timeframe, $start_date, $end_date, $link=''){
-            $functions = new Task_Window();
-            $functions->calc_dates($timeframe, $start_date, $end_date);
-            
+        function add($conn,$id, $name, $timeframe, $start_date, $end_date, $link=NULL,$percentage){
+            (new Task_Window())->calc_dates($timeframe, $start_date, $end_date);
+            $_SESSION["db_connection"]->dml_query($conn,"INSERT INTO tasks (id, name, timeframe, start_date, end_date, link, project, percentage) VALUES (".$id.", '".$name."', ".$timeframe.", '".$start_date."', '".$end_date."', ".$link.", ".$_SESSION['project_id'].", ".$percentage.")");
         }
         
         function calc_dates(&$timeframe, &$start_date, &$end_date){
