@@ -6,6 +6,10 @@ $TASK_FUNCTIONS = new Task_Window();
 $_SESSION["project_id"] = 1;
 $_SESSION["db_connection"]= new Connection();
 $conn = $_SESSION["db_connection"]->connect();
+
+if(isset($_POST['insert_task'])){
+    $TASK_FUNCTIONS->add($conn,($_POST['task_id']==NULL)? "''":$_POST['task_id'],$_POST['task_name'],(int)$_POST['task_timeframe']*86400000,$_POST['task_start-date'],$_POST['task_end-date'],($_POST['task_link']==NULL)? 'NULL':$_POST['task_link'],($_POST['task_percentage']==NULL)? 0:$_POST['task_percentage']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +59,7 @@ $conn = $_SESSION["db_connection"]->connect();
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>TimeFrame</th>
+                    <th>TimeFrame (days)</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Link</th>
@@ -159,7 +163,7 @@ $conn = $_SESSION["db_connection"]->connect();
         <form action="" method="post">
             <input type="text" name="task_id" class="text_input" placeholder="Task ID (Optional)"><br>
             <input type="text" name="task_name"class="text_input" placeholder="Name" required=""><br>
-            <input type="text" name="task_timeframe" class="text_input" placeholder="Timeframe"><br>
+            <input type="text" name="task_timeframe" class="text_input" placeholder="Timeframe(days)"><br>
             <input type="text" name="task_start-date" class="text_input" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
             <input type="text" name="task_end-date" class="text_input" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')"><br>
             <input type="text" name="task_link" class="text_input" placeholder="Link"><br>
@@ -243,9 +247,3 @@ $conn = $_SESSION["db_connection"]->connect();
 </body>
 
 </html>
-
-<?php
-    if(isset($_POST['insert_task'])){
-        $TASK_FUNCTIONS->add($conn,$_POST['task_id'],$_POST['task_name'],$_POST['task_timeframe'],$_POST['task_start-date'],$_POST['task_end-date'],$_POST['link'],$_POST['task_percentage']);
-    }
-?>
