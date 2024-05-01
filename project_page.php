@@ -8,8 +8,17 @@ $_SESSION["db_connection"]= new Connection();
 $conn = $_SESSION["db_connection"]->connect();
 
 if(isset($_POST['insert_task'])){
-    $TASK_FUNCTIONS->add($conn,($_POST['task_id']==NULL)? "''":$_POST['task_id'],$_POST['task_name'],(int)$_POST['task_timeframe']*86400000,$_POST['task_start-date'],$_POST['task_end-date'],($_POST['task_link']==NULL)? 'NULL':$_POST['task_link'],($_POST['task_percentage']==NULL)? 0:$_POST['task_percentage']);
+    if(!$TASK_FUNCTIONS->add($conn,($_POST['task_id']==NULL)? "''":$_POST['task_id'],$_POST['task_name'],(int)$_POST['task_timeframe']*86400000,$_POST['task_start-date'],$_POST['task_end-date'],($_POST['task_link']==NULL)? 'NULL':$_POST['task_link'],($_POST['task_percentage']==NULL)? 0:$_POST['task_percentage'])){
+        echo 'Error';
+    }
 }
+
+if(isset($_POST['remove_task'])){
+    if(!$TASK_FUNCTIONS->remove($conn,$_POST['toremoveTask'])){
+        echo 'Error';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +34,7 @@ if(isset($_POST['insert_task'])){
 
 <body>
     <div class="button_container">
-        <div class="files">
+        <div class="function_containers">
             <h2>Project</h2>
             <div class="buttons">
                 <button type="submit" name="f_create" id="f_create">Create</button>
@@ -34,7 +43,7 @@ if(isset($_POST['insert_task'])){
                 <button type="submit" name="f_close" id="f_close">Close</button>
             </div>
         </div>
-        <div class="tasks">
+        <div class="function_containers">
             <h2>Tasks</h2>
             <div class="buttons">
                 <button type="submit" name="t_add" id="t_add">Add</button>
@@ -43,7 +52,7 @@ if(isset($_POST['insert_task'])){
                 <button type="submit" name="t_unlink" id="t_unlink">Unlink</button>
             </div>
         </div>
-        <div class="resources">
+        <div class="function_containers">
             <h2>Resources</h2>
             <div class="buttons">
                 <button type="submit" name="r_add" id="r_add">Add</button>
@@ -176,7 +185,7 @@ if(isset($_POST['insert_task'])){
     <dialog id="taskremove">
         <h2>Remove Task</h2>
         <form action="" method="post">
-            <select name="task1" id="task1" class="select" required="">
+            <select name="toremoveTask" id="toremoveTask" class="select" required="">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
                 $tasks_id_name = $_SESSION["db_connection"]->select_queries($conn, "SELECT t.id,t.name FROM tasks t JOIN projects p ON t.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'");

@@ -3,7 +3,9 @@
     class Task_Window{
         function add($conn,$id, $name, $timeframe, $start_date, $end_date, $link=NULL,$percentage){
             (new Task_Window())->calc_dates($timeframe, $start_date, $end_date);
-            $_SESSION["db_connection"]->dml_query($conn,"INSERT INTO tasks (id, name, timeframe, start_date, end_date, link, project, percentage) VALUES (".$id.", '".$name."', ".$timeframe.", '".$start_date."', '".$end_date."', ".$link.", ".$_SESSION['project_id'].", ".$percentage.")");
+            if(!$_SESSION["db_connection"]->dml_query($conn,"INSERT INTO tasks (id, name, timeframe, start_date, end_date, link, project, percentage) VALUES (".$id.", '".$name."', ".$timeframe.", '".$start_date."', '".$end_date."', ".$link.", ".$_SESSION['project_id'].", ".$percentage.")")){
+                return false;
+            }
         }
         
         function calc_dates(&$timeframe, &$start_date, &$end_date){
@@ -33,9 +35,9 @@
             $_SESSION['db_connection']->dml_query($conn,"ALTER TABLE tasks AUTO_INCREMENT=1;");
         }
         function link($id_previous, $id_next){
-    
+            
         }
-        function unlink($id){
+        function unlink($id_taskTo, $idTaskFrom){
     
         }
         function find($toSearch){

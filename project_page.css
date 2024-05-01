@@ -13,7 +13,7 @@ body {
     justify-content: center;
 }
 
-.files {
+.function_containers{
     width: 30%;
     height: fit-content;
     min-height: 120px;
@@ -25,34 +25,9 @@ body {
     padding: 10px;
 }
 
-.tasks {
-    width: 30%;
-    height: fit-content;
-    min-height: 120px;
-    /* background-color: red; */
-    border-color: gray;
-    border-style: solid;
-    border-width: 1px;
-    text-align: center;
-    padding: 10px;
-}
-
 .buttons {
     text-align: center;
 }
-
-.resources {
-    width: 30%;
-    height: fit-content;
-    min-height: 120px;
-    /* background-color: blue; */
-    border-color: gray;
-    border-style: solid;
-    border-width: 1px;
-    text-align: center;
-    padding: 10px;
-}
-
 
 .button_container button {
     align-items: center;
