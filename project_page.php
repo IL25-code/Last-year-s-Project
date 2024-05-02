@@ -8,17 +8,28 @@ $_SESSION["db_connection"]= new Connection();
 $conn = $_SESSION["db_connection"]->connect();
 
 if(isset($_POST['insert_task'])){
-    if(!$TASK_FUNCTIONS->add($conn,($_POST['task_id']==NULL)? "''":$_POST['task_id'],$_POST['task_name'],(int)$_POST['task_timeframe']*86400000,$_POST['task_start-date'],$_POST['task_end-date'],($_POST['task_link']==NULL)? 'NULL':$_POST['task_link'],($_POST['task_percentage']==NULL)? 0:$_POST['task_percentage'])){
+    if($TASK_FUNCTIONS->add($conn,($_POST['task_id']==NULL)? "''":$_POST['task_id'],$_POST['task_name'],(int)$_POST['task_timeframe']*86400000,$_POST['task_start-date'],$_POST['task_end-date'],($_POST['task_link']==NULL)? 'NULL':$_POST['task_link'],($_POST['task_percentage']==NULL)? 0:$_POST['task_percentage'])){
         echo 'Error';
     }
 }
 
 if(isset($_POST['remove_task'])){
-    if(!$TASK_FUNCTIONS->remove($conn,$_POST['toremoveTask'])){
+    if($TASK_FUNCTIONS->remove($conn,$_POST['toremoveTask'])){
         echo 'Error';
     }
 }
 
+
+if(isset($_POST['link_task'])){
+    if($TASK_FUNCTIONS->link($conn,$_POST['toLink'],$_POST['toLink_To'])){
+        echo 'Error';
+    }
+}
+if(isset($_POST['unlink'])){
+    if($TASK_FUNCTIONS->unlink($conn,$_POST['idToUnlink'])){
+        echo 'Error';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -202,7 +213,7 @@ if(isset($_POST['remove_task'])){
     <dialog id="tasklink">
         <h2>Link Tasks</h2>
         <form action="" method="post">
-            <select name="task1" id="task1" class="select" required="">
+            <select name="toLink" id="toLink" class="select" required="">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
                 foreach ($tasks_id_name as $value) {
@@ -210,7 +221,7 @@ if(isset($_POST['remove_task'])){
                 }
                 ?>
             </select><br>
-            <select name="task2" id="task2" class="select" required="">
+            <select name="toLink_To" id="toLink_To" class="select" required="">
                 <option value="" disabled selected>Choose task 2</option>
                 <?php
                 foreach ($tasks_id_name as $value) {
@@ -227,7 +238,7 @@ if(isset($_POST['remove_task'])){
     <dialog id="taskunlink">
         <h2>Unlink Tasks</h2>
         <form action="" method="post">
-            <select name="task1" id="task1" class="select" required="">
+            <select name="idToUnlink" id="idToUnlink" class="select" required="">
                 <option value="" disabled selected>Choose task 1</option>
                 <?php
                 foreach ($tasks_id_name as $value) {
@@ -235,14 +246,6 @@ if(isset($_POST['remove_task'])){
                 }
                 ?>
             </select><br>
-            <select name="task2" id="task2" class="select" required="">
-                <option value="" disabled selected>Choose task 2</option>
-                <?php
-                foreach ($tasks_id_name as $value) {
-                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:" . $value["id"] . ")</option>";
-                }
-                ?>
-            </select>
             <input type="submit" name="unlink_task" value="Unlink">
         </form>
 

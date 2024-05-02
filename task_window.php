@@ -31,14 +31,20 @@
         }
 
         function remove($conn,$id){
-            $_SESSION['db_connection']->dml_query($conn,"DELETE FROM tasks WHERE tasks.id =".$id);
+            if(!$_SESSION['db_connection']->dml_query($conn,"DELETE FROM tasks WHERE tasks.id =".$id)){
+                return false;
+            }
             $_SESSION['db_connection']->dml_query($conn,"ALTER TABLE tasks AUTO_INCREMENT=1;");
         }
-        function link($id_previous, $id_next){
-            
+        function link($conn, $id_previous, $id_next){
+            if(!$_SESSION['db_connection']->dml_query($conn, "UPDATE tasks SET link = $id_previous WHERE id = $id_next")){
+                return false;
+            }
         }
-        function unlink($id_taskTo, $idTaskFrom){
-    
+        function unlink($conn, $idToUnlink){
+            if(!$_SESSION['db_connection']->dml_query($conn, "UPDATE tasks SET link = NULL WHERE id = $idToUnlink")){
+                return false;
+            }
         }
         function find($toSearch){
     
