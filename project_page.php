@@ -66,8 +66,8 @@ if(isset($_POST['unlink'])){
         <div class="function_containers">
             <h2>Resources</h2>
             <div class="buttons">
-                <button type="submit" name="r_add" id="r_add">Add</button>
-                <button type="submit" name="r_delete" id="r_delete">Delete</button>
+                <button type="submit" name="r_show_list" id="r_show_list">Show List</button>
+                <button type="submit" name="r_request" id="r_request">Request</button>
                 <button type="submit" name="r_link" id="r_link">Assign</button>
                 <button type="submit" name="r_unlink" id="r_unlink">Unassign</button>
             </div>
@@ -251,8 +251,8 @@ if(isset($_POST['unlink'])){
 
         <button class="close_button">&times;</button>
     </dialog>
-    <!-- Resource Add -->
-    <!-- Resource Remove -->
+    <!-- Resource Show List -->
+    <!-- Resource Request -->
     <!-- Resource Assign -->
     <!-- Resource Unassign -->
     <script type="text/javascript" src="popups.js"></script>
