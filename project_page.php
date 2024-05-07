@@ -170,7 +170,9 @@ if(isset($_POST['unlink'])){
         <form action="" method="post">
             <select name="task2" id="task2" class="select" required="">
                 <option value="" disabled selected>Choose project</option>
-
+                <?php
+                // Select p.name from project-users pu join projects p on pu.project_id = p.id where pu.user_id = $_SESSION["user_id"];
+                ?>
 
             </select>
             <input type="submit" name="create_project" value="Open">
@@ -246,14 +248,56 @@ if(isset($_POST['unlink'])){
                 }
                 ?>
             </select><br>
+            
             <input type="submit" name="unlink_task" value="Unlink">
         </form>
 
         <button class="close_button">&times;</button>
     </dialog>
     <!-- Resource Show List -->
+    <dialog id="resourceshow">
+        <h2>Resource List</h2>
+        <div class="resource_list">
+            <?php
+                // Select * from resources where project=$_SESSION["project_id"]
+            ?>
+        </div>
+        <button class="close_button">&times;</button>
+    </dialog>
     <!-- Resource Request -->
+    <dialog id="resourcerequest">
+        <h2>Request Resources</h2>
+        <form action="" method="post">
+
+            <input type="submit" name="request_resource" value="Save">
+        </form>
+        <button class="close_button">&times;</button>
+    </dialog>
     <!-- Resource Assign -->
+    <dialog id="resourceassign">
+        <h2>Assign Resources</h2>
+        <form action="" method="post">
+            <select name="task_for_resource_assign" id="task_for_resource_assign" class="select" required="">
+                <option value="" disabled selected>Choose task</option>
+                <?php
+                foreach ($tasks_id_name as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:" . $value["id"] . ")</option>";
+                }
+                ?>
+            </select><br>
+            <select name="resourceToAssign" id="resourceToAssign" class="select" required="">
+                <option value="" disabled selected>Choose resource</option>
+                <?php
+                foreach ($_SESSION["db_connection"]->select_queries($conn, "SELECT r.id,r.name FROM resources r JOIN projects p ON r.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'") as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:" . $value["id"] . ")</option>";
+                }
+                ?>
+            </select><br>
+            <input type="submit" name="assign_resource" value="Unlink">
+        </form>
+        <button class="close_button">&times;</button>
+    </dialog>
+
     <!-- Resource Unassign -->
     <script type="text/javascript" src="popups.js"></script>
 </body>
