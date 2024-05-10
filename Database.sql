@@ -44,3 +44,11 @@ CREATE TABLE IF NOT EXISTS tasks(
 	foreign key (link) references tasks(id),
 	foreign key (project) references projects(id)
 )ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS resources(
+	id int primary key not null auto_increment,
+	name varchar(255) not null,
+	description text not null,
+	id_task int,
+	foreign key (id_task) references tasks(id)
+)ENGINE=INNODB;

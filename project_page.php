@@ -135,8 +135,12 @@ if(isset($_POST['unlink'])){
                         backgroundColor: {
                             fill: '#F0FAFB',
                         },
-                        width: '5000',
-                        height: '5000',
+                        hAxis:{
+                            scale: 0.5,
+                        },
+                        vAxis:{
+                            scale: 0.5,
+                        },
                     };
 
                     var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
@@ -297,9 +301,9 @@ if(isset($_POST['unlink'])){
         </form>
         <button class="close_button">&times;</button>
     </dialog>
-
     <!-- Resource Unassign -->
     <script type="text/javascript" src="popups.js"></script>
+
 </body>
 
 </html>

@@ -17,6 +17,7 @@ document.querySelector("#t_unlink").addEventListener("click", ()=>{
     dialogID = "taskunlink";
 });
 
+
 for(var x of document.querySelectorAll(".close_button")){
     x.addEventListener("click", ()=>{
         document.getElementById(dialogID).close();
