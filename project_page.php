@@ -302,6 +302,30 @@ if(isset($_POST['unlink'])){
         <button class="close_button">&times;</button>
     </dialog>
     <!-- Resource Unassign -->
+    <dialog id="resourceunassign">
+        <h2>Assign Resources</h2>
+        <form action="" method="post">
+            <select name="task_for_resource_unassign" id="task_for_resource_unassign" class="select" required="">
+                <option value="" disabled selected>Choose task</option>
+                <?php
+                foreach ($tasks_id_name as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:" . $value["id"] . ")</option>";
+                }
+                ?>
+            </select><br>
+            <select name="resourceToUnassign" id="resourceToUnassign" class="select" required="">
+                <option value="" disabled selected>Choose resource</option>
+                <?php
+                foreach ($_SESSION["db_connection"]->select_queries($conn, "SELECT r.id,r.name FROM resources r JOIN projects p ON r.project=p.id WHERE p.id='" . $_SESSION["project_id"] . "'") as $value) {
+                    echo "<option value='" . $value["id"] . "'>Name: " . $value["name"] . " (ID:" . $value["id"] . ")</option>";
+                }
+                ?>
+            </select><br>
+            <input type="submit" name="unassign_resource" value="Unlink">
+        </form>
+        <button class="close_button">&times;</button>
+    </dialog>
+
     <script type="text/javascript" src="popups.js"></script>
 
 </body>
